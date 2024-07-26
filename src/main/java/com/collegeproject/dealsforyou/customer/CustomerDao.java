@@ -1,6 +1,7 @@
 package com.collegeproject.dealsforyou.customer;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface CustomerDao {
@@ -15,8 +16,8 @@ public interface CustomerDao {
 
     List<Customer> getAllCustomers();
 
-    UUID getIdFromEmail(String email);
+    Optional<UUID> getIdFromEmail(String email);
 
-    Customer getCustomerById(UUID id);
+    Optional<Customer> getCustomerById(UUID id);
 
 }

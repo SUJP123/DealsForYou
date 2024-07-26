@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,11 +25,11 @@ public class CustomerService {
         return customerDao.getAllCustomers();
     }
 
-    public UUID findIdByEmail(String email) {
+    public Optional<UUID> findIdByEmail(String email) {
         return customerDao.getIdFromEmail(email);
     }
 
-    public Customer findCustomerById(UUID id) {
+    public Optional<Customer> findCustomerById(UUID id) {
         return customerDao.getCustomerById(id);
     }
 

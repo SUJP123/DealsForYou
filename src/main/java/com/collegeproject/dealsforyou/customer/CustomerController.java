@@ -3,6 +3,7 @@ package com.collegeproject.dealsforyou.customer;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -26,12 +27,12 @@ public class CustomerController {
     }
 
     @GetMapping("/{email}")
-    public UUID findIdByEmail(@PathVariable("email") String email) {
+    public Optional<UUID> findIdByEmail(@PathVariable("email") String email) {
         return customerService.findIdByEmail(email);
     }
 
     @GetMapping("/{id}")
-    public Customer findCustomerById(@PathVariable("id") UUID id) {
+    public Optional<Customer> findCustomerById(@PathVariable("id") UUID id) {
         return customerService.findCustomerById(id);
     }
 

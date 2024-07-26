@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository("postgres")
@@ -43,22 +44,24 @@ public class CustomerDaoService implements CustomerDao {
     }
 
     @Override
-    public UUID getIdFromEmail(String email) {
+    public Optional<UUID> getIdFromEmail(String email) {
         String sql = "SELECT id FROM customer WHERE email = ?";
-        return jdbcTemplate.queryForObject(sql, (resultSet, i) -> UUID.fromString(resultSet.getString("id")));
+        return Optional.ofNullable(jdbcTemplate
+                .queryForObject(sql, (resultSet, i) ->
+                        UUID.fromString(resultSet.getString("id"))));
     }
 
     @Override
-    public Customer getCustomerById(UUID id) {
+    public Optional<Customer> getCustomerById(UUID id) {
         String sql = "SELECT * FROM customer WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, (resultSet, i) -> {
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, (resultSet, i) -> {
             String firstName = resultSet.getString("first_name");
             String lastName = resultSet.getString("last_name");
             String email = resultSet.getString("email");
             String password = resultSet.getString("password");
             Role role = Role.valueOf(resultSet.getString("role"));
             return new Customer(id, firstName, lastName, email, password, role);
-        });
+        }));
     }
 
 
