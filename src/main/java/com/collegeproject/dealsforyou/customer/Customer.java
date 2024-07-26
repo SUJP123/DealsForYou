@@ -39,6 +39,7 @@ public class Customer implements UserDetails {
     @Size(min = 8)
     private String password;
 
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     public Customer() {

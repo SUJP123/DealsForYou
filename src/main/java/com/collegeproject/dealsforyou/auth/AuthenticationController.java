@@ -5,6 +5,7 @@ import com.collegeproject.dealsforyou.config.JwtService;
 import com.collegeproject.dealsforyou.customer.Customer;
 import com.collegeproject.dealsforyou.customer.CustomerDao;
 import com.collegeproject.dealsforyou.customer.CustomerRepository;
+import com.collegeproject.dealsforyou.customer.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -47,7 +46,7 @@ public class AuthenticationController {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRole())
+                .role(Role.valueOf("ROLE_USER"))
                 .build();
         customerRepository.save(customer);
         var jwtToken = jwtService.generateToken(customer);

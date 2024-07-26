@@ -24,6 +24,7 @@ public class CustomerDaoService implements CustomerDao {
 
     @Override
     public int insertCustomer(Customer customer) {
+        System.out.println(customer.getRole());
         UUID id = customer.getId() == null ? UUID.randomUUID() : customer.getId();
         return insertCustomer(id, customer.getFirstName(), customer.getLastName(), customer.getEmail(),
                 customer.getPassword(), customer.getRole());
