@@ -17,9 +17,9 @@ public class CustomerDaoService implements CustomerDao {
     }
 
     @Override
-    public int insertCustomer(UUID id, String firstName, String lastName, String email, String password, Role role) {
-        String sql = "INSERT INTO customer id, firstName, lastName, email, password, role VALUES (?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, id, firstName, lastName, email, password, role);
+    public int insertCustomer(UUID id, String firstName, String lastName, String email, String password, Role role_user) {
+        String sql = "INSERT INTO customer id, firstName, lastName, email, password, role_user VALUES (?, ?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, id, firstName, lastName, email, password, role_user);
     }
 
     @Override

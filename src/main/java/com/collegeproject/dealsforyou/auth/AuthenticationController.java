@@ -5,7 +5,6 @@ import com.collegeproject.dealsforyou.config.JwtService;
 import com.collegeproject.dealsforyou.customer.Customer;
 import com.collegeproject.dealsforyou.customer.CustomerDao;
 import com.collegeproject.dealsforyou.customer.CustomerRepository;
-import com.collegeproject.dealsforyou.customer.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,9 +36,6 @@ public class AuthenticationController {
     private CustomerRepository customerRepository;
 
     @Autowired
-    private CustomerDao customerDao;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
@@ -50,22 +46,23 @@ public class AuthenticationController {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
-                .role(Role.valueOf("ROLE_USER"))
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(request.getRole())
                 .build();
         customerRepository.save(customer);
         var jwtToken = jwtService.generateToken(customer);
         return new AuthenticationResponse(jwtToken);
     }
 
-    @PostMapping
+    @PostMapping("/authenticate")
     public AuthenticationResponse authenticate(
             @RequestBody AuthenticationRequest request
     ) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
-        UUID id = customerDao.getIdFromEmail(request.getEmail()).orElseThrow();
-        var customer = customerDao.getCustomerById(id).orElseThrow();
+        var customer = customerRepository.findCustomerByEmail(request.getEmail())
+                .orElseThrow();
         var jwtToken = jwtService.generateToken(customer);
         return AuthenticationResponse.builder()
                 .token(jwtToken)

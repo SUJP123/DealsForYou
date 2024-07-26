@@ -39,7 +39,6 @@ public class Customer implements UserDetails {
     @Size(min = 8)
     private String password;
 
-    @NotBlank
     private Role role;
 
     public Customer() {

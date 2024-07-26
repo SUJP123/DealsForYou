@@ -1,6 +1,7 @@
 package com.collegeproject.dealsforyou.config;
 
 import com.collegeproject.dealsforyou.customer.CustomerDao;
+import com.collegeproject.dealsforyou.customer.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,11 +20,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    private final CustomerDao customerDao;
+    private final CustomerRepository customerRepository;
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return email -> customerDao.getCustomerById(customerDao.getIdFromEmail(email).orElseThrow())
+        return email -> customerRepository.findCustomerByEmail(email)
                 .orElseThrow( () -> new UsernameNotFoundException("User Not Found"));
     }
 
