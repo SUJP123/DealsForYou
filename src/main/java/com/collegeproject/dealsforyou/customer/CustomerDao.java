@@ -16,7 +16,7 @@ public interface CustomerDao {
 
     List<Customer> getAllCustomers();
 
-    Optional<UUID> getIdFromEmail(String email);
+    UUID getIdFromEmail(String email);
 
     Optional<Customer> getCustomerById(UUID id);
 

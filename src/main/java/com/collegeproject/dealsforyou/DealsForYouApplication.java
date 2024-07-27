@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DealsForYouApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(DealsForYouApplication.class, args);
 	}
 

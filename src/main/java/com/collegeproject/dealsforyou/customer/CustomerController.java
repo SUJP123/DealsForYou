@@ -10,7 +10,7 @@ import java.util.UUID;
 @RequestMapping("api/v1/customer")
 public class CustomerController {
 
-    private final CustomerService customerService;
+    private CustomerService customerService;
 
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
@@ -26,8 +26,8 @@ public class CustomerController {
         return customerService.addCustomer(customer);
     }
 
-    @GetMapping("/{email}")
-    public Optional<UUID> findIdByEmail(@PathVariable("email") String email) {
+    @GetMapping("/search/{email}")
+    public UUID findIdByEmail(@PathVariable("email") String email) {
         return customerService.findIdByEmail(email);
     }
 

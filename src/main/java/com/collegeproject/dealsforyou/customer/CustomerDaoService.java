@@ -45,17 +45,17 @@ public class CustomerDaoService implements CustomerDao {
     }
 
     @Override
-    public Optional<UUID> getIdFromEmail(String email) {
-        String sql = "SELECT id FROM customer WHERE email = ?";
-        return Optional.ofNullable(jdbcTemplate
-                .queryForObject(sql, (resultSet, i) ->
-                        UUID.fromString(resultSet.getString("id"))));
+    public UUID getIdFromEmail(String email) {
+        final String sql = "SELECT id FROM customer WHERE email = ?";
+        return jdbcTemplate
+                .queryForObject(sql, new Object[]{email}, (resultSet, i) ->
+                        UUID.fromString(resultSet.getString("id")));
     }
 
     @Override
     public Optional<Customer> getCustomerById(UUID id) {
-        String sql = "SELECT * FROM customer WHERE id = ?";
-        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, (resultSet, i) -> {
+        final String sql = "SELECT * FROM customer WHERE id = ?";
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new Object[]{id}, (resultSet, i) -> {
             String firstName = resultSet.getString("first_name");
             String lastName = resultSet.getString("last_name");
             String email = resultSet.getString("email");

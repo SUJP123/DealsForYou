@@ -12,15 +12,14 @@ import java.util.UUID;
 @Service
 public class CustomerService {
 
-    private final CustomerDao customerDao;
+    private CustomerDao customerDao;
 
-    private final CustomerRepository customerRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
-    public CustomerService(@Qualifier("postgres") CustomerDao customerDao,
-                           CustomerRepository customerRepository) {
+    public CustomerService(@Qualifier("postgres") CustomerDao customerDao) {
 
         this.customerDao = customerDao;
-        this.customerRepository = customerRepository;
     }
 
     public int addCustomer(Customer customer) {
@@ -35,7 +34,7 @@ public class CustomerService {
         return customerDao.getAllCustomers();
     }
 
-    public Optional<UUID> findIdByEmail(String email) {
+    public UUID findIdByEmail(String email) {
         return customerDao.getIdFromEmail(email);
     }
 
