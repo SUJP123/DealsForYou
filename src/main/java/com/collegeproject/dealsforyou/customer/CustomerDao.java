@@ -20,4 +20,8 @@ public interface CustomerDao {
 
     Optional<Customer> getCustomerById(UUID id);
 
+    int insertItemToCart(Integer productId, UUID userId);
+
+    int insertItemToBought(Integer productId, UUID userId, float rating);
+
 }

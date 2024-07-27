@@ -65,6 +65,20 @@ public class CustomerDaoService implements CustomerDao {
         }));
     }
 
+    @Override
+    public int insertItemToCart(Integer productId, UUID userId) {
+        float initial_rating = -1;
+        Status status = Status.valueOf("CART");
+        final String sql = "INSERT INTO bought (productId, userId, initial_rating, status) VALUES (?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, productId, userId, initial_rating, status);
+    }
+
+    @Override
+    public int insertItemToBought(Integer productId, UUID userId, float rating) {
+        Status status = Status.valueOf("PURCHASED");
+        final String sql = "INSERT INTO bought (productId, userId, rating, status) VALUES (?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, productId, userId, rating, status);
+    }
 
 
 }

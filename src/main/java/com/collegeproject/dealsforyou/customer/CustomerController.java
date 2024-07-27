@@ -36,4 +36,19 @@ public class CustomerController {
         return customerService.findCustomerById(id);
     }
 
+    @PostMapping("/cart")
+    public int addItemToCart(@RequestParam Integer productId,
+                             @RequestParam UUID userId) {
+        return customerService.addItemToCart(productId, userId);
+    }
+
+    @PostMapping("/bought")
+    public int addItemToBought(@RequestParam Integer productId,
+                               @RequestParam UUID userId,
+                               @RequestParam float rating) {
+        return customerService.addItemToBought(productId, userId, rating);
+    }
+
+
+
 }

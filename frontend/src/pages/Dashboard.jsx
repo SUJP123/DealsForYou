@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import {Link} from "react-router-dom";
 
 
 function Dashboard() {
@@ -35,11 +36,19 @@ function Dashboard() {
     return (
         <div className='Dashboard'>
             {profile &&
-                <div>
+                <div className='Header'>
                     <h1>Welcome to your dashboard, {profile.firstName} {profile.lastName}</h1>
                 </div>
             }
-
+            <div className='User-Picks'>
+                <p>Personalized Picks</p>
+            </div>
+            <div className='Shopping'>
+                <p>Explore the full Shop</p>
+                <button>
+                    <Link to='/shop'>Explore Shop</Link>
+                </button>
+            </div>
         </div>
     )
 }

@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
+import Shop from "./pages/Shop";
 
 const App = () => (
     <Provider store={store}>
@@ -13,8 +14,9 @@ const App = () => (
             <Routes>
                 <Route exact path="/login" element={<Login />} />
                 <Route exact path="/register" element={<Register />} />
-                <Route exact path="/dashboard/*" element={<Dashboard />} />
+                <Route exact path="/dashboard" element={<Dashboard />} />
                 <Route exact path="/" element={<Home />} />
+                <Route exact path="/shop" element={<Shop />} />
             </Routes>
         </Router>
     </Provider>

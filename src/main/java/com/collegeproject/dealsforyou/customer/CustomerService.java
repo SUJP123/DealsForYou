@@ -42,6 +42,12 @@ public class CustomerService {
         return customerDao.getCustomerById(id);
     }
 
+    public int addItemToCart(Integer productId, UUID userId) {
+        return customerDao.insertItemToCart(productId, userId);
+    }
 
+    public int addItemToBought(Integer productId, UUID userId, float rating) {
+        return customerDao.insertItemToBought(productId, userId, rating);
+    }
 
 }

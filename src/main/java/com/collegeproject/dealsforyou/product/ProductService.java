@@ -21,4 +21,10 @@ public class ProductService {
     public List<Product> getProductsByCompany(String company) {
         return productDao.selectProductsByCompany(company);
     }
+
+    public List<Product> getProductsByFilter(String name, String company,
+                                             String clothingType, Float minRetail,
+                                             Float maxRetail, String gender) {
+        return productDao.selectByFilter(name, company, clothingType, minRetail, maxRetail, gender);
+    }
 }

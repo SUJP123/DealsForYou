@@ -1,10 +1,7 @@
 package com.collegeproject.dealsforyou.product;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +24,17 @@ public class ProductController {
     @GetMapping("/{company}")
     public List<Product> getProductsByCompany(@PathVariable("company") String company) {
         return productService.getProductsByCompany(company);
+    }
+
+    @GetMapping("/filter")
+    public List<Product> getProductsByFilter(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String company,
+            @RequestParam(required = false) String clothingType,
+            @RequestParam(required = false) Float minRetail,
+            @RequestParam(required = false) Float maxRetail,
+            @RequestParam(required = false) String gender) {
+
+        return productService.getProductsByFilter(name, company, clothingType, minRetail, maxRetail, gender);
     }
 }
