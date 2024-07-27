@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './../styles/Shop.css';
 
 function Shop() {
     const [products, setProducts] = useState([]);
@@ -8,8 +9,9 @@ function Shop() {
     const [clothing, setClothing] = useState('');
     const [lowPrice, setLowPrice] = useState('');
     const [highPrice, setHighPrice] = useState('');
+    const [showFilters, setShowFilters] = useState(false);
+    const BACKEND_API = 'http://localhost:8080';
     const token = localStorage.getItem('token');
-    const BACKEND_API = 'http://localhost:8080'
 
     useEffect(() => {
         fetchProducts();
@@ -18,7 +20,7 @@ function Shop() {
     const fetchProducts = async (filters = {}) => {
         try {
             const response = await axios.get(`${BACKEND_API}/api/v1/products/filter`, {
-                headers: {
+                headers : {
                     Authorization: `Bearer ${token}`
                 },
                 params: filters
@@ -41,10 +43,17 @@ function Shop() {
         fetchProducts(filters);
     };
 
+    const toggleFilters = () => {
+        setShowFilters(!showFilters);
+    };
+
     return (
-        <div className='Shop'>
-            <div className='Filter'>
-                <form onSubmit={handleSubmit}>
+        <div className="shop-container">
+            <button className="filter-toggle-button" onClick={toggleFilters}>
+                {showFilters ? 'Hide Filters' : 'Show Filters'}
+            </button>
+            {showFilters && (
+                <form className="filter-form" onSubmit={handleSubmit}>
                     <div>
                         <label>
                             Gender:
@@ -77,22 +86,20 @@ function Shop() {
                     </div>
                     <button type="submit">Filter</button>
                 </form>
-            </div>
-            <div className='Products'>
+            )}
+            <div className="products-grid">
                 {products.length > 0 ? (
-                    <ul>
-                        {products.map(product => (
-                            <li key={product.id}>
-                                <h2>{product.name}</h2>
-                                <p>Retail Price: ${product.retail}</p>
-                                <p>Deal Price: ${product.deal}</p>
-                                <p>Company: {product.company}</p>
-                                <p>Clothing Type: {product.clothingType}</p>
-                                <p>Gender: {product.gender}</p>
-                                <a href={product.externalURL} target="_blank" rel="noopener noreferrer">Buy Now</a>
-                            </li>
-                        ))}
-                    </ul>
+                    products.map(product => (
+                        <div className="product-card" key={product.id}>
+                            <h2>{product.name}</h2>
+                            <img className='image' src={product.image} alt={'Product-Image'} />
+                            <p>Retail Price: ${product.retail}</p>
+                            <p>Deal Price: ${product.deal}</p>
+                            <p>{product.saved}</p>
+                            <p>Clothing Type: {product.clothingType}</p>
+                            <a href={product.externalURL} target="_blank" rel="noopener noreferrer">Buy Now</a>
+                        </div>
+                    ))
                 ) : (
                     <p>No products found.</p>
                 )}
@@ -102,4 +109,3 @@ function Shop() {
 }
 
 export default Shop;
-
