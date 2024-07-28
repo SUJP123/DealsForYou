@@ -1,5 +1,6 @@
 package com.collegeproject.dealsforyou.customer;
 
+import com.collegeproject.dealsforyou.product.Product;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -67,15 +68,41 @@ public class CustomerDaoService implements CustomerDao {
 
     @Override
     public int insertItemToCart(Integer productId, UUID userId) {
-        float initial_rating = -1;
-        Status status = Status.valueOf("CART");
-        final String sql = "INSERT INTO bought (productId, userId, initial_rating, status) VALUES (?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, productId, userId, initial_rating, status);
+        float user_rating = -1;
+        String status = "CART";
+        final String sql = "INSERT INTO bought (productid, userid, user_rating, status) VALUES (?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, productId, userId, user_rating, status);
+    }
+
+    @Override
+    public List<Product> getItemsInCart(UUID userId) {
+        final String cartSql = "SELECT productid FROM bought WHERE userid = ? AND status = 'CART'";
+        List<Integer> productIds = jdbcTemplate.query(cartSql, new Object[]{userId}, (resultSet, i) -> resultSet.getInt("productid"));
+
+        if (productIds.isEmpty()) {
+            return List.of();
+        }
+        final String productSql = "SELECT * FROM products WHERE id IN (" + String.join(",", productIds.stream().map(String::valueOf).toArray(String[]::new)) + ")";
+        return jdbcTemplate.query(productSql, (resultSet, i) -> {
+            return new Product(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getFloat("retail"),
+                    resultSet.getFloat("deal"),
+                    resultSet.getString("saved"),
+                    resultSet.getString("description"),
+                    resultSet.getString("company"),
+                    resultSet.getString("clothing_type"),
+                    resultSet.getString("image"),
+                    resultSet.getString("external_link")
+            );
+        });
+
     }
 
     @Override
     public int insertItemToBought(Integer productId, UUID userId, float rating) {
-        Status status = Status.valueOf("PURCHASED");
+        String status = "PURCHASED";
         final String sql = "INSERT INTO bought (productId, userId, rating, status) VALUES (?, ?, ?, ?)";
         return jdbcTemplate.update(sql, productId, userId, rating, status);
     }

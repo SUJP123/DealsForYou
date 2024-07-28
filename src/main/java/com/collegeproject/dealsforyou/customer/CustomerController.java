@@ -1,5 +1,6 @@
 package com.collegeproject.dealsforyou.customer;
 
+import com.collegeproject.dealsforyou.product.Product;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,10 +37,15 @@ public class CustomerController {
         return customerService.findCustomerById(id);
     }
 
-    @PostMapping("/cart")
-    public int addItemToCart(@RequestParam Integer productId,
-                             @RequestParam UUID userId) {
+    @PostMapping("/cart/{productId}/{userId}")
+    public int addItemToCart(@PathVariable("productId") Integer productId,
+                             @PathVariable("userId") UUID userId) {
         return customerService.addItemToCart(productId, userId);
+    }
+
+    @GetMapping("/{id}/getcart")
+    public List<Product> findItemsInCart(@PathVariable("id") UUID userId) {
+        return customerService.findItemsInCart(userId);
     }
 
     @PostMapping("/bought")

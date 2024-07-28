@@ -1,5 +1,6 @@
 package com.collegeproject.dealsforyou.customer;
 
+import com.collegeproject.dealsforyou.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -45,6 +46,8 @@ public class CustomerService {
     public int addItemToCart(Integer productId, UUID userId) {
         return customerDao.insertItemToCart(productId, userId);
     }
+
+    public List<Product> findItemsInCart(UUID userId) {return customerDao.getItemsInCart(userId);}
 
     public int addItemToBought(Integer productId, UUID userId, float rating) {
         return customerDao.insertItemToBought(productId, userId, rating);
