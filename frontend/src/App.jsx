@@ -6,7 +6,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
+import Bought from "./pages/Bought";
 import Shop from "./pages/Shop";
+
 
 const App = () => (
     <Provider store={store}>
@@ -17,6 +19,7 @@ const App = () => (
                 <Route exact path="/dashboard" element={<Dashboard />} />
                 <Route exact path="/" element={<Home />} />
                 <Route exact path="/shop" element={<Shop />} />
+                <Route exact path='/purchases' element={<Bought />} />
             </Routes>
         </Router>
     </Provider>

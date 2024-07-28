@@ -26,6 +26,11 @@ public interface CustomerDao {
 
     List<Product> getItemsInCart(UUID userId);
 
+    int removeItemFromCart(Integer productId, UUID userId);
+
+    int buyItemFromCart(Integer productId, UUID userId);
+
     int insertItemToBought(Integer productId, UUID userId, float rating);
 
+    List<Product> getPurchaseById(UUID userId);
 }

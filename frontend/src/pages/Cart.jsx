@@ -2,16 +2,63 @@ import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {getItemsInCart, toggleCart} from '../service/user';
 import './../styles/Cart.css';
+import axios from "axios";
 
 function Cart() {
     const dispatch = useDispatch();
     const { items, showCart, status } = useSelector((state) => state.cart);
+    const BACKEND_API = 'http://localhost:8080'
 
     useEffect(() => {
         if (showCart) {
             dispatch(getItemsInCart());
         }
     }, [showCart, dispatch]);
+
+    const handlePurchase = async(ids) => {
+        const token = localStorage.getItem('token');
+        const email = localStorage.getItem('email');
+
+        const id = await axios.get(`${BACKEND_API}/api/v1/customer/search/${email}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const userId = id.data;
+
+        const response = await axios.put(`${BACKEND_API}/api/v1/customer/update/${userId}/${ids}`,
+            {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+        dispatch(getItemsInCart());
+        return response.data;
+    }
+
+    const handeDelete = async (ids) => {
+        const token = localStorage.getItem('token');
+        const email = localStorage.getItem('email');
+
+        const id = await axios.get(`${BACKEND_API}/api/v1/customer/search/${email}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const userId = id.data;
+
+        const response = await axios.put(`${BACKEND_API}/api/v1/customer/delete/${userId}/${ids}`,
+            {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+        dispatch(getItemsInCart());
+        return response.data;
+    }
 
     return (
         <div className={`cart-sidebar ${showCart ? 'open' : ''}`}>
@@ -28,6 +75,8 @@ function Cart() {
                                 <div className="cart-item" key={index}>
                                     <h3>{item.name}</h3>
                                     <p>Deal Price: ${item.deal}</p>
+                                    <button onClick={() => handeDelete(item.id) }>Remove From Cart</button>
+                                    <button onClick={() => handlePurchase(item.id)}>Mark as Purchased</button>
                                     <a href={item.externalURL} target="_blank" rel="noopener noreferrer">Buy Now</a>
                                 </div>
                             ))

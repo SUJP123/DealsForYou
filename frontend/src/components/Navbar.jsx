@@ -16,7 +16,10 @@ function Navbar() {
                     <Link to="/dashboard">Dashboard</Link>
                 </div>
                 <div className='rightSide'>
+                    <Link to='/'>Home</Link>
                     <Link to="/dashboard">Dashboard</Link>
+                    <Link to="/shop">Shop</Link>
+                    <Link to="/purchases">Purchases</Link>
                     <button onClick={toggleNavbar}>Button</button>
                 </div>
             </div>

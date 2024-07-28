@@ -97,14 +97,51 @@ public class CustomerDaoService implements CustomerDao {
                     resultSet.getString("external_link")
             );
         });
-
     }
+
+    @Override
+    public int removeItemFromCart(Integer productId, UUID userId) {
+        final String sql = "DELETE FROM bought WHERE productid = ? AND userid = ?";
+        return jdbcTemplate.update(sql, productId, userId);
+    }
+
+    @Override
+    public int buyItemFromCart(Integer productId, UUID userId) {
+        final String sql = "UPDATE bought SET status = 'PURCHASED' WHERE productid = ? AND userid = ?";
+        return jdbcTemplate.update(sql, productId, userId);
+    }
+
 
     @Override
     public int insertItemToBought(Integer productId, UUID userId, float rating) {
         String status = "PURCHASED";
         final String sql = "INSERT INTO bought (productId, userId, rating, status) VALUES (?, ?, ?, ?)";
         return jdbcTemplate.update(sql, productId, userId, rating, status);
+    }
+
+    @Override
+    public List<Product> getPurchaseById(UUID userId) {
+        final String cartSql = "SELECT productid FROM bought WHERE userid = ? AND status = 'PURCHASED'";
+        List<Integer> productIds = jdbcTemplate.query(cartSql, new Object[]{userId}, (resultSet, i) -> resultSet.getInt("productid"));
+
+        if (productIds.isEmpty()) {
+            return List.of();
+        }
+        final String productSql = "SELECT * FROM products WHERE id IN (" + String.join(",", productIds.stream().map(String::valueOf).toArray(String[]::new)) + ")";
+        return jdbcTemplate.query(productSql, (resultSet, i) -> {
+            return new Product(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getFloat("retail"),
+                    resultSet.getFloat("deal"),
+                    resultSet.getString("saved"),
+                    resultSet.getString("description"),
+                    resultSet.getString("company"),
+                    resultSet.getString("clothing_type"),
+                    resultSet.getString("image"),
+                    resultSet.getString("external_link")
+            );
+        });
     }
 
 

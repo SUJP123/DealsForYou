@@ -3,7 +3,7 @@ import axios from 'axios';
 import './../styles/Shop.css';
 import Navbar from "../components/Navbar";
 import Cart from "./Cart";
-import {addItemToCart} from "../service/user";
+import {addItemToCart, getItemsInCart} from "../service/user";
 import {useDispatch} from "react-redux";
 
 function Shop() {
@@ -57,6 +57,25 @@ function Shop() {
         setShowCart(!showCart);
     };
 
+    const handleCartRefresh = async() => {
+        const token = localStorage.getItem('token');
+        const email = localStorage.getItem('email');
+
+        const id = await axios.get(`${BACKEND_API}/api/v1/customer/search/${email}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const userId = id.data;
+
+        const response = await axios.get(`${BACKEND_API}/api/v1/customer/${userId}/getcart`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+    }
+
     const handleAddToCart = async (product) => {
         const token = localStorage.getItem('token');
         const email = localStorage.getItem('email');
@@ -75,6 +94,7 @@ function Shop() {
                 'Authorization': `Bearer ${token}`
             }
         });
+        await handleCartRefresh();
     };
 
     return (

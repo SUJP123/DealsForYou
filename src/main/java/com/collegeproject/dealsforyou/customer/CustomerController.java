@@ -48,6 +48,18 @@ public class CustomerController {
         return customerService.findItemsInCart(userId);
     }
 
+    @PutMapping("/delete/{userId}/{productId}")
+    public int deleteItemInCart(@PathVariable("productId") Integer productId,
+                                @PathVariable("userId") UUID userId) {
+        return customerService.deleteItemInCart(productId, userId);
+    }
+
+    @PutMapping("/update/{userId}/{productId}")
+    public int updateItemInCart(@PathVariable("productId") Integer productId,
+                                @PathVariable("userId") UUID userId) {
+        return customerService.buyItemInCart(productId, userId);
+    }
+
     @PostMapping("/bought")
     public int addItemToBought(@RequestParam Integer productId,
                                @RequestParam UUID userId,
@@ -55,7 +67,10 @@ public class CustomerController {
         return customerService.addItemToBought(productId, userId, rating);
     }
 
-
+    @GetMapping("/bought/{userId}")
+    public List<Product> findPurchasesById(@PathVariable("userId") UUID userId) {
+        return customerService.findPurchaseById(userId);
+    }
 
 
 
