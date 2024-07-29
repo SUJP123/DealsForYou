@@ -141,7 +141,7 @@ function Shop() {
                             <div>
                                 <label>
                                     Company:
-                                    <input type="text" value={company} onChange={(e) => setCompany(e.target.value)}/>
+                                    <input type="text" value={company} onChange={(e) => setCompany(e.target.value.toLowerCase())}/>
                                 </label>
                             </div>
                             <div>

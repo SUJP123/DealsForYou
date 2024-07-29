@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getItemsInCart, toggleCart } from '../service/user';
 import './../styles/Cart.css';
 import axios from "axios";
+import RatingPopup from "./RatingPopup";
 
 function Cart({ showCart }) {
     const dispatch = useDispatch();
     const { items, status } = useSelector((state) => state.cart);
     const BACKEND_API = 'http://localhost:8080';
+    const [showRatingPopup, setShowRatingPopup] = useState(false);
+    const [productToRate, setProductToRate] = useState(null);
 
     useEffect(() => {
         if (showCart) {
@@ -15,7 +18,7 @@ function Cart({ showCart }) {
         }
     }, [showCart, dispatch]);
 
-    const handlePurchase = async(ids) => {
+    const handlePurchase = async(item) => {
         const token = localStorage.getItem('token');
         const email = localStorage.getItem('email');
 
@@ -27,13 +30,17 @@ function Cart({ showCart }) {
 
         const userId = id.data;
 
-        const response = await axios.put(`${BACKEND_API}/api/v1/customer/update/${userId}/${ids}`,
+        const response = await axios.put(`${BACKEND_API}/api/v1/customer/update/${userId}/${item.id}`,
             {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
         dispatch(getItemsInCart());
+
+        setProductToRate(item);
+        setShowRatingPopup(true);
+
         return response.data;
     };
 
@@ -62,6 +69,9 @@ function Cart({ showCart }) {
 
     return (
         <div className={`cart-sidebar ${showCart ? 'open' : ''}`}>
+            {showRatingPopup && (
+                <RatingPopup product={productToRate} onClose={() => {setShowRatingPopup(false); setProductToRate(null);}} />
+            )}
             <button className="cart-toggle-button" onClick={() => dispatch(toggleCart())}>
                 {showCart ? 'Close Cart' : 'Open Cart'}
             </button>
@@ -77,7 +87,7 @@ function Cart({ showCart }) {
                                     <p>Deal Price: ${item.deal}</p>
                                     <img className='cart-image' src={item.image} alt='image' />
                                     <button onClick={() => handleDelete(item.id)}>Remove From Cart</button>
-                                    <button onClick={() => handlePurchase(item.id)}>Mark as Purchased</button>
+                                    <button onClick={() => handlePurchase(item)}>Mark as Purchased</button>
                                     <a href={item.externalURL} target="_blank" rel="noopener noreferrer">Buy Now</a>
                                 </div>
                             ))
