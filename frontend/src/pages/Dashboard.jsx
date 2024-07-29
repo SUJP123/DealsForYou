@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {Link} from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 
 function Dashboard() {
@@ -35,6 +36,7 @@ function Dashboard() {
 
     return (
         <div className='Dashboard'>
+            <Navbar />
             {profile &&
                 <div className='Header'>
                     <h1>Welcome to your dashboard, {profile.firstName} {profile.lastName}</h1>

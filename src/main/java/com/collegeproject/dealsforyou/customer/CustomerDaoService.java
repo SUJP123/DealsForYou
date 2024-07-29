@@ -115,8 +115,14 @@ public class CustomerDaoService implements CustomerDao {
     @Override
     public int insertItemToBought(Integer productId, UUID userId, float rating) {
         String status = "PURCHASED";
-        final String sql = "INSERT INTO bought (productId, userId, rating, status) VALUES (?, ?, ?, ?)";
+        final String sql = "INSERT INTO bought (productid, userid, user_rating, status) VALUES (?, ?, ?, ?)";
         return jdbcTemplate.update(sql, productId, userId, rating, status);
+    }
+
+    @Override
+    public int updateItemRating(float rating, Integer productId, UUID userId) {
+        final String sql = "UPDATE bought SET user_rating = ? AND WHERE productid = ? and userid = ?";
+        return jdbcTemplate.update(sql, rating, productId, userId);
     }
 
     @Override

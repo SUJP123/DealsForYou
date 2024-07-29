@@ -32,5 +32,7 @@ public interface CustomerDao {
 
     int insertItemToBought(Integer productId, UUID userId, float rating);
 
+    int updateItemRating(float rating, Integer productId, UUID userId);
+
     List<Product> getPurchaseById(UUID userId);
 }

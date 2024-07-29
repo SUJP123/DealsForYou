@@ -57,6 +57,10 @@ public class CustomerService {
         return customerDao.insertItemToBought(productId, userId, rating);
     }
 
+    public int addRatingToItem(float rating, Integer productId, UUID userId) {
+        return customerDao.updateItemRating(rating, productId, userId);
+    }
+
     public List<Product> findPurchaseById(UUID userId) {
         return customerDao.getPurchaseById(userId);
     }

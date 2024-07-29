@@ -60,11 +60,18 @@ public class CustomerController {
         return customerService.buyItemInCart(productId, userId);
     }
 
-    @PostMapping("/bought")
-    public int addItemToBought(@RequestParam Integer productId,
-                               @RequestParam UUID userId,
-                               @RequestParam float rating) {
+    @PostMapping("/bought/{productId}/{userId}/{rating}")
+    public int addItemToBought(@PathVariable("productId") Integer productId,
+                               @PathVariable("userId") UUID userId,
+                               @PathVariable("rating") float rating) {
         return customerService.addItemToBought(productId, userId, rating);
+    }
+
+    @PutMapping("/rating/{userId}/{productId}/{rating}")
+    public int addRatingToItem(@PathVariable("rating") float rating,
+                                @PathVariable("productId") Integer productId,
+                                @PathVariable("userId") UUID userId) {
+        return customerService.addRatingToItem(rating, productId, userId);
     }
 
     @GetMapping("/bought/{userId}")

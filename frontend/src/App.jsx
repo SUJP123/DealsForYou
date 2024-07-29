@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Bought from "./pages/Bought";
 import Shop from "./pages/Shop";
+import RatingPopup from "./pages/RatingPopup";
 
 
 const App = () => (
