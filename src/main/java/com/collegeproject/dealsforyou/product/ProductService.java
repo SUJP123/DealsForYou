@@ -27,4 +27,8 @@ public class ProductService {
                                              Float maxRetail, String gender) {
         return productDao.selectByFilter(name, company, clothingType, minRetail, maxRetail, gender);
     }
+
+    public Product getProductById(Integer id) {
+        return productDao.selectProductById(id);
+    }
 }

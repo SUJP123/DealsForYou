@@ -1,9 +1,6 @@
 package com.collegeproject.dealsforyou.promo;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,8 +14,11 @@ public class PromoController {
         this.promoService = promoService;
     }
 
-    @GetMapping("/{company}")
-    public List<Promo> findPromosByCompany(@PathVariable("company") String company) {
-        return promoService.findPromosByCompany(company);
+    @GetMapping("/filter")
+    public List<Promo> findPromosByCompany(
+            @RequestParam(required = false) String company,
+            @RequestParam(required = false) String clothingType
+        ) {
+        return promoService.findPromosByCompany(company, clothingType);
     }
 }

@@ -37,4 +37,9 @@ public class ProductController {
 
         return productService.getProductsByFilter(name, company, clothingType, minRetail, maxRetail, gender);
     }
+
+    @GetMapping("/search/{id}")
+    public Product getProductById(@PathVariable("id") Integer id) {
+        return productService.getProductById(id);
+    }
 }

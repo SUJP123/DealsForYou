@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../service/auth';
+import './../styles/Login.css';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -21,27 +22,27 @@ function Login() {
     };
 
     return (
-        <div className='Login'>
-            <div className='Header'>
+        <div className='login'>
+            <div className='login-header'>
                 <h2>Login</h2>
             </div>
-            <div className='Form'>
+            <div className='login-form'>
                 <form onSubmit={handleSubmit}>
-                    <div className='Form-Email'>
+                    <div className='login-form-Email'>
                         <label>Email:</label>
                         <input type='text'
                                value={email}
                                onChange={(e) => setEmail(e.target.value)}
                                required/>
                     </div>
-                    <div className='Form-Password'>
+                    <div className='login-form-Password'>
                         <label>Password:</label>
                         <input type='text'
                                value={password}
                                onChange={(e) => setPassword(e.target.value)}
                                required/>
                     </div>
-                    <div className='Form-Button'>
+                    <div className='login-form-Button'>
                         <button type='submit'>Login</button>
                         {status === 'failed' && <p>Error Logging In</p>}
                     </div>

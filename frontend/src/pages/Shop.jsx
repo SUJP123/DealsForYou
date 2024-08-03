@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import Cart from "./Cart";
 import {useDispatch} from "react-redux";
 import RatingPopup from "./RatingPopup";
+import PromoList from "./PromoList";
 
 function Shop() {
     const [products, setProducts] = useState([]);
@@ -20,6 +21,8 @@ function Shop() {
     const dispatch = useDispatch();
     const [showRatingPopup, setShowRatingPopup] = useState(false);
     const [productToRate, setProductToRate] = useState(null);
+    const [showPromoPopup, setShowPromoPopup] = useState(false);
+    const [productForPromo, setProductForPromo] = useState(null);
 
     useEffect(() => {
         fetchProducts();
@@ -30,6 +33,12 @@ function Shop() {
         setShowRatingPopup(true);
         window.open(product.externalURL, '_blank');
     };
+
+    const handleProductClick = (product) => {
+        setProductForPromo(product);
+        setShowPromoPopup(true);
+    };
+
 
     const fetchProducts = async (filters = {}) => {
         try {
@@ -49,7 +58,7 @@ function Shop() {
         event.preventDefault();
         const filters = {
             gender,
-            company,
+            company: company.toLowerCase(),
             clothingType: clothing,
             minRetail: lowPrice,
             maxRetail: highPrice
@@ -111,12 +120,20 @@ function Shop() {
             {showRatingPopup && (
                 <RatingPopup product={productToRate} onClose={() => {setShowRatingPopup(false); setProductToRate(null);}} />
             )}
+            {showPromoPopup && productForPromo && (
+                <PromoList
+                    company={productForPromo.company}
+                    clothingType={productForPromo.clothingType}
+                    onClose={() => setShowPromoPopup(false)}
+                />
+            )}
             <div className='header'>
                 <div className='title'>
                     <h1>Explore the shop below</h1>
                 </div>
                 <div className='about'>
                     <p>Filter through products and find the best deals.</p>
+                    <p>Click on products to see any related promos.</p>
                 </div>
                 <div className='cart-btn'>
                     <button className="cart-toggle" onClick={toggleCart}>
@@ -135,13 +152,19 @@ function Shop() {
                             <div>
                                 <label>
                                     Gender:
-                                    <input type="text" value={gender} onChange={(e) => setGender(e.target.value)}/>
+                                    <select value={gender} onChange={(e) => setGender(e.target.value)}>
+                                        <option value="">Select</option>
+                                        <option value="Men">Men</option>
+                                        <option value="Women">Women</option>
+                                        <option value="Boy">Boy</option>
+                                        <option value="Girl">Girl</option>
+                                    </select>
                                 </label>
                             </div>
                             <div>
                                 <label>
                                     Company:
-                                    <input type="text" value={company} onChange={(e) => setCompany(e.target.value.toLowerCase())}/>
+                                    <input type="text" value={company} onChange={(e) => setCompany(e.target.value)}/>
                                 </label>
                             </div>
                             <div>
@@ -172,7 +195,7 @@ function Shop() {
                     <div className="products-grid">
                         {products.length > 0 ? (
                             products.map(product => (
-                                <div className="product-card" key={product.id}>
+                                <div className="product-card" key={product.id} onClick={() => handleProductClick(product)}>
                                     <h2>{product.name}</h2>
                                     <img className="image" src={product.image} alt="Product-Image"/>
                                     <p>Retail Price: ${product.retail}</p>

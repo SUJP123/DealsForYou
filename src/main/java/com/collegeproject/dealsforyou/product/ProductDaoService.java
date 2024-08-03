@@ -17,7 +17,7 @@ public class ProductDaoService implements ProductDao{
     }
     @Override
     public List<Product> selectAllProducts() {
-        final String sql = "SELECT * FROM products";
+        final String sql = "SELECT * FROM products ORDER BY RAND ()";
         return jdbcTemplate.query(sql, (resultSet, i) -> {
             Integer id = Integer.valueOf(resultSet.getString("id"));
             String name = resultSet.getString("name");
@@ -80,8 +80,27 @@ public class ProductDaoService implements ProductDao{
             params.add("%" + gender + "%");
         }
 
+        sql.append(" ORDER BY RANDOM()");
+
         return jdbcTemplate.query(sql.toString(), params.toArray(), (resultSet, i) -> {
             Integer id = resultSet.getInt("id");
+            String names = resultSet.getString("name");
+            Float retail = resultSet.getFloat("retail");
+            Float deal = resultSet.getFloat("deal");
+            String saved = resultSet.getString("saved");
+            String description = resultSet.getString("description");
+            String company_name = resultSet.getString("company");
+            String clothing_Type = resultSet.getString("clothing_type");
+            String image = resultSet.getString("image");
+            String externalUrl = resultSet.getString("external_link");
+            return new Product(id, names, retail, deal, saved, description, company_name, clothing_Type, image, externalUrl);
+        });
+    }
+
+    @Override
+    public Product selectProductById(Integer id) {
+        final String sql = "SELECT * FROM products WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (resultSet, i) -> {
             String names = resultSet.getString("name");
             Float retail = resultSet.getFloat("retail");
             Float deal = resultSet.getFloat("deal");

@@ -9,5 +9,5 @@ public interface ProductDao {
     List<Product> selectByFilter(String name, String company,
                                  String clothingType, Float minRetail,
                                  Float maxRetail, String gender);
-
+    Product selectProductById(Integer id);
 }

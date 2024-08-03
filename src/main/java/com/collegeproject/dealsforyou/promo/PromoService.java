@@ -15,7 +15,7 @@ public class PromoService {
         this.promoDao = promoDao;
     }
 
-    public List<Promo> findPromosByCompany(String company) {
-        return promoDao.selectPromoByCompany(company);
+    public List<Promo> findPromosByCompany(String company, String clothingType) {
+        return promoDao.selectPromoByCompany(company, clothingType);
     }
 }

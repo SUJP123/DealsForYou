@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface PromoDao {
 
-    List<Promo> selectPromoByCompany(String company);
+    List<Promo> selectPromoByCompany(String company, String clothingType);
 }

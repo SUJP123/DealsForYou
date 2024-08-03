@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Bought from "./pages/Bought";
 import Shop from "./pages/Shop";
 import RatingPopup from "./pages/RatingPopup";
+import Promos from "./pages/Promos";
 
 
 const App = () => (
@@ -21,6 +22,7 @@ const App = () => (
                 <Route exact path="/" element={<Home />} />
                 <Route exact path="/shop" element={<Shop />} />
                 <Route exact path='/purchases' element={<Bought />} />
+                <Route exact path="/promos" element={<Promos />} />
             </Routes>
         </Router>
     </Provider>
