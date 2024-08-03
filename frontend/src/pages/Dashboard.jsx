@@ -14,7 +14,7 @@ function Dashboard() {
     const token = localStorage.getItem('token')
     const email = localStorage.getItem('email')
     const BACKEND_API = 'http://localhost:8080'
-    const FLASK_API = 'http://127.0.0.1:5000/recommend'
+    const FLASK_API = 'http://127.0.0.1:5000/recommend';
 
     const handleBuyNow = (product) => {
         setProductToRate(product);
@@ -114,7 +114,7 @@ function Dashboard() {
                                     </div>
                                 ))
                             ) : (
-                                <p>No products found.</p>
+                                <p>No products found, purchase items to receive personalized picks.</p>
                             )}
                         </div>
                     </div>

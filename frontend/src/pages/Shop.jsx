@@ -15,6 +15,9 @@ function Shop() {
     const [lowPrice, setLowPrice] = useState('');
     const [highPrice, setHighPrice] = useState('');
     const [showFilters, setShowFilters] = useState(false);
+    const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
     const BACKEND_API = 'http://localhost:8080';
     const token = localStorage.getItem('token');
     const [showCart, setShowCart] = useState(false);
@@ -26,7 +29,19 @@ function Shop() {
 
     useEffect(() => {
         fetchProducts();
-    }, []);
+    }, [page]);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight - 1 && !loading && hasMore) {
+                setPage(prevPage => prevPage + 1);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [loading, hasMore]);
 
     const handleBuyNow = (product) => {
         setProductToRate(product);
@@ -39,23 +54,37 @@ function Shop() {
         setShowPromoPopup(true);
     };
 
-
     const fetchProducts = async (filters = {}) => {
+        setLoading(true);
         try {
             const response = await axios.get(`${BACKEND_API}/api/v1/products/filter`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
-                params: filters
+                params: {...filters, page}
             });
-            setProducts(response.data);
+
+            setProducts(prevProducts => {
+                const newProducts = response.data.filter(newProduct => !prevProducts.some(product => product.id === newProduct.id));
+                return [...prevProducts, ...newProducts];
+            });
+
+            if (response.data.length === 0) {
+                setHasMore(false);
+            }
+
+            setLoading(false);
         } catch (error) {
             console.error('Error fetching products:', error);
+            setLoading(false);
         }
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setPage(1);
+        setProducts([]);
+        setHasMore(true);
         const filters = {
             gender,
             company: company.toLowerCase(),
@@ -202,14 +231,15 @@ function Shop() {
                                     <p>Deal Price: ${product.deal}</p>
                                     <p>{product.saved}</p>
                                     <p>Clothing Type: {product.clothingType}</p>
-                                    <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
-                                    <button onClick={() => handleBuyNow(product)}>Buy Now</button>
+                                    <button onClick={(e) => {e.stopPropagation(); handleAddToCart(product);}}>Add to Cart</button>
+                                    <button onClick={(e) => {e.stopPropagation(); handleBuyNow(product);}}>Buy Now</button>
                                 </div>
                             ))
                         ) : (
                             <p>No products found.</p>
                         )}
                     </div>
+                    {loading && <p>Loading more products...</p>}
                 </div>
             </div>
         </div>
@@ -217,4 +247,3 @@ function Shop() {
 }
 
 export default Shop;
-

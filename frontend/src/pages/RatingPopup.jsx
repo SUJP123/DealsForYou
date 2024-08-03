@@ -4,10 +4,19 @@ import axios from "axios";
 
 const RatingPopup = ({ product, onClose }) => {
     const [rating, setRating] = useState(0);
+    const [hoverRating, setHoverRating] = useState(0);
     const BACKEND_API = 'http://localhost:8080';
 
-    const handleRatingChange = (event) => {
-        setRating(event.target.value);
+    const handleRatingChange = (value) => {
+        setRating(value);
+    };
+
+    const handleMouseEnter = (value) => {
+        setHoverRating(value);
+    };
+
+    const handleMouseLeave = () => {
+        setHoverRating(0);
     };
 
     const handleSubmit = async () => {
@@ -39,17 +48,20 @@ const RatingPopup = ({ product, onClose }) => {
         <div className="overlay">
             <div className="popup">
                 <h2>Rate Your Purchase</h2>
-                <p>How would you rate you purchase of {product.name}?</p>
+                <p>Would you buy products similar to {product.name} again?</p>
                 <div className="rating-options">
                     {[1, 2, 3, 4, 5].map((star) => (
-                        <label key={star}>
-                            <input
-                                type="radio"
-                                value={star}
-                                checked={rating == star}
-                                onChange={handleRatingChange}
-                            />
-                            {star} Star{star > 1 && 's'}
+                        <label
+                            key={star}
+                            onMouseEnter={() => handleMouseEnter(star)}
+                            onMouseLeave={handleMouseLeave}
+                            onClick={() => handleRatingChange(star)}
+                        >
+                            <span className={
+                                star <= (hoverRating || rating) ? "highlighted" : ""
+                            }>
+                                ★
+                            </span>
                         </label>
                     ))}
                 </div>

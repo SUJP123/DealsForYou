@@ -1,3 +1,8 @@
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 .home {
     display: flex;
     flex-direction: column;
@@ -5,6 +10,7 @@
     padding: 20px;
     background-color: #f5f5f5;
     height: 100vh;
+    animation: fadeIn 0.5s ease-in;
 }
 
 .home-headers {
@@ -14,32 +20,47 @@
 .home-headers h1 {
     font-size: 2.5rem;
     color: #333;
+    animation: fadeIn 2s ease-in;
 }
 
 .home-about {
     margin-bottom: 20px;
     text-align: center;
+    animation: fadeIn 2s ease-in;
 }
 
 .home-about p {
     font-size: 1.2rem;
     color: #666;
+    max-width: 800px;
 }
 
 .home-auth {
     display: flex;
     justify-content: center;
     width: 100%;
+    animation: fadeIn 3s ease-in;
 }
 
-.home-login, .home-register {
+.home-login {
     margin: 0 20px;
     padding: 20px;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     flex: 1;
-    max-width: 400px;
+    max-width: 300px;
+    text-align: center;
+}
+
+.home-register {
+    margin: 0 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex: 2;
+    max-width: 500px;
     text-align: center;
 }
 
@@ -68,13 +89,77 @@
     background-color: #0056b3;
 }
 
-.home-register {
-    margin-top: 20px;
-}
-
 .home-register p {
     font-size: 1rem;
     color: #333;
+}
+
+.home-featured {
+    margin-top: 10%;
+    text-align: center;
+    animation: fadeIn 4s ease-in;
+}
+
+.home-featured h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.home-logos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeIn 4s ease-in;
+}
+
+.home-logos img {
+    margin: 10px;
+    height: 80px;
+}
+
+.home-services {
+    margin-top: 40px;
+    text-align: center;
+    animation: fadeIn 5s ease-in;
+}
+
+.home-services h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.service {
+    margin: 20px 0;
+}
+
+.service h3 {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.service p {
+    font-size: 1rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.home-footer {
+    margin-top: 40px;
+    text-align: center;
+    animation: fadeIn 6s ease-in;
+}
+
+.service-header {
+    margin-top: 15%;
+}
+
+.home-footer p {
+    font-size: 1rem;
+    color: #666;
 }
 
 @media (max-width: 768px) {

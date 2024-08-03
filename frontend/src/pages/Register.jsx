@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../service/auth';
+import './../styles/Register.css';
 
 function Register() {
     const [firstName, setFirstName] = useState('');
@@ -28,13 +29,13 @@ function Register() {
     };
 
     return (
-        <div className='Register'>
-            <div className='Header'>
+        <div className='register'>
+            <div className='header'>
                 <h2>Register</h2>
             </div>
-            <div className='Form'>
+            <div className='form'>
                 <form onSubmit={handleSubmit}>
-                    <div className='FirstName'>
+                    <div className='first-name'>
                         <label>First Name:</label>
                         <input
                             type="text"
@@ -43,16 +44,16 @@ function Register() {
                             required
                         />
                     </div>
-                    <div className='LastName'>
+                    <div className='last-name'>
                         <label>Last Name:</label>
                         <input
-                        type="text"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                        required
+                            type="text"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                            required
                         />
                     </div>
-                    <div className='Email'>
+                    <div className='email'>
                         <label>Email:</label>
                         <input
                             type="email"
@@ -61,7 +62,7 @@ function Register() {
                             required
                         />
                     </div>
-                    <div className='Password'>
+                    <div className='password'>
                         <label>Password:</label>
                         <input
                             type="password"
@@ -70,16 +71,16 @@ function Register() {
                             required
                         />
                     </div>
-                    <div className='Confirm-Password'>
+                    <div className='confirm-password'>
                         <label>Confirm Password:</label>
                         <input
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
                         />
                     </div>
-                    <div className='Form-Button'>
+                    <div className='form-button'>
                         <button type="submit">Register</button>
                         {status === 'failed' && <p>{error}</p>}
                     </div>
@@ -87,6 +88,6 @@ function Register() {
             </div>
         </div>
     );
-};
+}
 
 export default Register;
