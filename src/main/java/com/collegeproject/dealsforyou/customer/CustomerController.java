@@ -9,6 +9,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/customer")
+@CrossOrigin(origins = {"http://localhost:3000", "https://dealsforyou.vercel.app"})
 public class CustomerController {
 
     private CustomerService customerService;

@@ -6,6 +6,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/promo")
+@CrossOrigin(origins = {"http://localhost:3000", "https://dealsforyou.vercel.app"})
 public class PromoController {
 
     private PromoService promoService;
