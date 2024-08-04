@@ -117,7 +117,7 @@ public class ProductDaoService implements ProductDao{
 
     @Override
     public List<Product> selectRecommendedProductIds(UUID userId) {
-        final String sql = "SELECT p.id, p.name, p.retail, p.deal, p.saved, p.image, p.description, p.clothing_type " +
+        final String sql = "SELECT p.id, p.name, p.retail, p.deal, p.saved, p.image, p.description, p.clothing_type, p.company, p.external_link " +
                 "FROM recommended r " +
                 "JOIN products p ON r.productid = p.id " +
                 "WHERE r.userid = ?";
