@@ -1,6 +1,6 @@
 app:
   datasource:
-    jdbc-url: jdbc:postgresql://localhost:5432/deal
-    username: sujaypatel
-    password: password
+    jdbc-url: jdbc:postgresql://cd5gks8n4kb20g.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/damhlntutqnvcg
+    username: ubgugfi4jm8mb2
+    password: p5174337c7aff7d0287eefab02c73016c502690d9d839ccce13fd5cc14f602012
     pool-size: 30

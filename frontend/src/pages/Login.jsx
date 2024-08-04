@@ -37,7 +37,7 @@ function Login() {
                     </div>
                     <div className='login-form-Password'>
                         <label>Password:</label>
-                        <input type='text'
+                        <input type='password'
                                value={password}
                                onChange={(e) => setPassword(e.target.value)}
                                required/>
