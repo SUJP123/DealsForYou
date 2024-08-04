@@ -68,7 +68,7 @@ function Dashboard() {
 
                 let prods = [ ]
                 for (let i = 0; i < userProducts.length; i++) {
-                    let prodId = userProducts[i];
+                    let prodId = userProducts[i].id;
                     let prod = await axios.get(`${BACKEND_API}/api/v1/products/search/${prodId}`, {
                         headers: {
                             'Authorization' : `Bearer ${token}`
