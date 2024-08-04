@@ -57,13 +57,13 @@ function Dashboard() {
                 });
                 setProfile(user.data);
 
-                const products = await axios.post(`${BACKEND_API}/api/v1/products/recommend/${userId}`, {}, {
+                const products = await axios.get(`${BACKEND_API}/api/v1/products/recommend/${userId}`, {
                     headers: {
                         'Authorization' : `Bearer ${token}`
                     }
                 });
 
-                const userProducts = products.data.recommendations
+                const userProducts = products.data
                 console.log(userProducts);
 
                 let prods = [ ]
