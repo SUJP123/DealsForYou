@@ -2,7 +2,7 @@
 
 DealsForYou is a web application designed to provide users with personalized product recommendations and discounts. It integrates a Spring Boot backend with a Flask service for machine learning-based recommendations, along with a React frontend to deliver a seamless user experience. This project showcases the integration of machine learning techniques for recommendation systems, database management, and web development skills.
 
-# See additional github repos here
+## See additional github repos used to make this project
 - ML model
   - https://github.com/SUJP123/Clothing-Recommendation-System
 - Scrapers
