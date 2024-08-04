@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/products")
@@ -41,5 +42,10 @@ public class ProductController {
     @GetMapping("/search/{id}")
     public Product getProductById(@PathVariable("id") Integer id) {
         return productService.getProductById(id);
+    }
+
+    @GetMapping("/recommend/{id}")
+    public List<Product> getRecommendedProductIds(@PathVariable("id") UUID userId) {
+        return productService.getRecommendedProductIds(userId);
     }
 }

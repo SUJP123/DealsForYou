@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Repository("postgres_products")
 public class ProductDaoService implements ProductDao{
@@ -111,6 +112,29 @@ public class ProductDaoService implements ProductDao{
             String image = resultSet.getString("image");
             String externalUrl = resultSet.getString("external_link");
             return new Product(id, names, retail, deal, saved, description, company_name, clothing_Type, image, externalUrl);
+        });
+    }
+
+    @Override
+    public List<Product> selectRecommendedProductIds(UUID userId) {
+        final String sql = "SELECT p.id, p.name, p.retail, p.deal, p.saved, p.image, p.description, p.clothing_type " +
+                "FROM recommended r " +
+                "JOIN products p ON r.productid = p.id " +
+                "WHERE r.userid = ?";
+
+        return jdbcTemplate.query(sql, new Object[]{userId}, (resultSet, i) -> {
+            return new Product(
+                    Integer.valueOf(resultSet.getString("id")),
+                    resultSet.getString("name"),
+                    resultSet.getFloat("retail"),
+                    resultSet.getFloat("deal"),
+                    resultSet.getString("saved"),
+                    resultSet.getString("description"),
+                    resultSet.getString("company"),
+                    resultSet.getString("clothing_type"),
+                    resultSet.getString("image"),
+                    resultSet.getString("external_link")
+            );
         });
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -30,5 +31,9 @@ public class ProductService {
 
     public Product getProductById(Integer id) {
         return productDao.selectProductById(id);
+    }
+
+    public List<Product> getRecommendedProductIds(UUID userId) {
+        return productDao.selectRecommendedProductIds(userId);
     }
 }

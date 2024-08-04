@@ -107,16 +107,31 @@ public class CustomerDaoService implements CustomerDao {
 
     @Override
     public int buyItemFromCart(Integer productId, UUID userId) {
-        final String sql = "UPDATE bought SET status = 'PURCHASED' WHERE productid = ? AND userid = ?";
-        return jdbcTemplate.update(sql, productId, userId);
+        final String updateSql = "UPDATE bought SET status = 'PURCHASED' WHERE productid = ? AND userid = ?";
+        int updateCount = jdbcTemplate.update(updateSql, productId, userId);
+
+        // Delete the item from the recommended table
+        if (updateCount > 0) {
+            final String deleteSql = "DELETE FROM recommended WHERE productid = ? AND userid = ?";
+            jdbcTemplate.update(deleteSql, productId, userId);
+        }
+
+        return updateCount;
     }
 
 
     @Override
     public int insertItemToBought(Integer productId, UUID userId, float rating) {
         String status = "PURCHASED";
-        final String sql = "INSERT INTO bought (productid, userid, user_rating, status) VALUES (?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, productId, userId, rating, status);
+        final String updateSql = "INSERT INTO bought (productid, userid, user_rating, status) VALUES (?, ?, ?, ?)";
+        int updateCount = jdbcTemplate.update(updateSql, productId, userId, rating, status);
+        // Delete the item from the recommended table
+        if (updateCount > 0) {
+            final String deleteSql = "DELETE FROM recommended WHERE productid = ? AND userid = ?";
+            jdbcTemplate.update(deleteSql, productId, userId);
+        }
+
+        return updateCount;
     }
 
     @Override

@@ -14,7 +14,6 @@ function Dashboard() {
     const token = localStorage.getItem('token')
     const email = localStorage.getItem('email')
     const BACKEND_API = 'http://localhost:8080'
-    const FLASK_API = 'http://127.0.0.1:5000/recommend';
 
     const handleBuyNow = (product) => {
         setProductToRate(product);
@@ -58,9 +57,11 @@ function Dashboard() {
                 });
                 setProfile(user.data);
 
-                const products = await axios.post(`${FLASK_API}`, {
-                    "user_id": userId
-                })
+                const products = await axios.post(`${BACKEND_API}/api/v1/products/recommend/${userId}`, {}, {
+                    headers: {
+                        'Authorization' : `Bearer ${token}`
+                    }
+                });
 
                 const userProducts = products.data.recommendations
                 console.log(userProducts);

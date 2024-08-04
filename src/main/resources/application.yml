@@ -1,6 +1,6 @@
 app:
   datasource:
-    jdbc-url: jdbc:postgresql://cd5gks8n4kb20g.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/damhlntutqnvcg
+    jdbc-url: jdbc:postgresql://c4g0h0kljo97tk.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d3p25mtkfq4kaj
     username: ubgugfi4jm8mb2
-    password: p5174337c7aff7d0287eefab02c73016c502690d9d839ccce13fd5cc14f602012
+    password: p7db3d4f658f3b1c98e2226fd7bcea2eeedb2b111827ef93e442d058ef38db8f9
     pool-size: 30
