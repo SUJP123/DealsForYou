@@ -6,8 +6,7 @@ DealsForYou is a web application designed to provide users with personalized pro
 Features
 Tech Stack
 Setup and Installation
-Usage
-Project Structure
+Register and Login
 Machine Learning Model
 API Endpoints
 Contributing
@@ -36,49 +35,7 @@ Docker (for deployment)
 Installation
 Clone the repository
 
-# Set up and Installation
-sh
-Copy code
-git clone https://github.com/yourusername/dealsforyou.git
-cd dealsforyou
-Backend Setup (Spring Boot)
-
-Navigate to the backend directory:
-
-sh
-Copy code
-cd backend
-Create a PostgreSQL database and update the application.properties file with your database credentials.
-
-Build and run the Spring Boot application:
-
-sh
-Copy code
-./mvnw spring-boot:run
-
-Navigate to the frontend directory:
-
-sh
-Copy code
-cd frontend
-Install the dependencies:
-
-sh
-Copy code
-npm install
-Start the React development server:
-
-sh
-Copy code
-npm start
-Docker Deployment
-Build and run the Docker containers:
-
-sh
-Copy code
-docker-compose up --build
-Usage
-Register and Login:
+# Register and Login:
 
 Navigate to the homepage and register a new account.
 Login with your credentials.
