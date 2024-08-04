@@ -13,7 +13,7 @@ function Dashboard() {
     const [productToRate, setProductToRate] = useState(null);
     const token = localStorage.getItem('token')
     const email = localStorage.getItem('email')
-    const BACKEND_API = 'http://localhost:8080'
+    const BACKEND_API = 'https://dealsforyou-220ae0f9b292.herokuapp.com'
 
     const handleBuyNow = (product) => {
         setProductToRate(product);

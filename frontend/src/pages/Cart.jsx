@@ -8,7 +8,7 @@ import RatingPopup from "./RatingPopup";
 function Cart({ showCart }) {
     const dispatch = useDispatch();
     const { items, status } = useSelector((state) => state.cart);
-    const BACKEND_API = 'http://localhost:8080';
+    const BACKEND_API = 'https://dealsforyou-220ae0f9b292.herokuapp.com';
     const [showRatingPopup, setShowRatingPopup] = useState(false);
     const [productToRate, setProductToRate] = useState(null);
 

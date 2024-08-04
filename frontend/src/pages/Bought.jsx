@@ -5,7 +5,7 @@ import './../styles/Bought.css';
 
 function Bought() {
     const [products, setProducts] = useState([])
-    const BACKEND_API = 'http://localhost:8080';
+    const BACKEND_API = 'https://dealsforyou-220ae0f9b292.herokuapp.com';
 
     useEffect(() => {
         displayBought();

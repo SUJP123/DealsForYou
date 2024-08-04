@@ -6,6 +6,7 @@ const PromoList = ({ company, clothingType, onClose }) => {
     const [promos, setPromos] = useState([]);
     const [visibleCount, setVisibleCount] = useState(5);
     const token = localStorage.getItem('token');
+    const BACKEND_API = 'https://dealsforyou-220ae0f9b292.herokuapp.com';
 
     useEffect(() => {
         const fetchPromos = async () => {
@@ -27,7 +28,7 @@ const PromoList = ({ company, clothingType, onClose }) => {
                     clothing = 'Top';
                 }
 
-                const response = await axios.get('http://localhost:8080/api/v1/promo/filter', {
+                const response = await axios.get(`${BACKEND_API}/api/v1/promo/filter`, {
                     params: {
                         "company": company,
                         "clothingType": clothing
